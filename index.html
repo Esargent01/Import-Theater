@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<title>Import Theater</title>
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/dragdealer.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+        <link rel="stylesheet" type="text/css" href="css/cs-select.css" />
+        <link rel="stylesheet" type="text/css" href="css/cs-skin-boxes.css" />
+        <link rel="stylesheet" type="text/css" href="css/set1.css" />
+  		<script src="js/modernizr.custom.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/app.js"></script>
+	</head>
+	<body ng-app="TheaterApp">
+		<div class="container">
+			<header id="header" class="codrops-header">
+				<button class="slider-switch">Switch view</button>
+			</header>
+			<div id="overlay" class="overlay">
+				<div class="info">
+					<h2>Menu Controls</h2>
+					<span class="info-drag">Drag Sliders</span>
+					<span class="info-keys">Use Arrows</span>
+					<span class="info-switch">Switch view</span>
+					<button>Got it!</button>	
+				</div>
+			</div>
+			<div id="slideshow" class="dragslider">
+				<section class="img-dragger img-dragger-large dragdealer">
+					<div class="handle">
+						<div class="slide" data-content="content-1">
+							<div class="img-wrap"><img src="img/whitegtr.jpg" alt="img1"/></div>
+							<h2>Welcome to Import Theater<span>Now Showing...</span></h2>
+							<button class="content-switch">Read more</button>
+						</div>
+						<div class="slide" data-content="content-2">
+							<div class="img-wrap"><img src="img/nsx.jpg" alt="img2"/></div>
+							<h2>Import Cars</h2>
+							<button class="content-switch">Read more</button>
+						</div>
+						<div class="slide" data-content="content-3">
+							<div class="img-wrap"><img src="img/gurl.jpg" alt="img3"/></div>
+							<h2>Import Models</h2>
+							<button class="content-switch">Read more</button>
+						</div>
+						<div class="slide" data-content="content-4">
+							<div class="img-wrap"><img src="img/meet.jpg" alt="img4"/></div>
+							<h2>Car Meets</h2>
+							<button class="content-switch">Read more</button>
+						</div>
+						<div class="slide" data-content="content-5">
+							<div class="img-wrap"><img src="img/forum.jpg" alt="img5"/></div>
+							<h2>Forums</h2>
+							<button class="content-switch">Read more</button>
+						</div>
+						<div class="slide" data-content="content-6">
+							<div class="img-wrap"><img src="img/wheel.jpg" alt="img6"/></div>
+							<h2>Contact</h2>
+							<button class="content-switch">Read more</button>
+						</div>
+					</div>
+				</section><!-- /img-dragger-->
+				<!-- Content section -->
+				<section class="pages">
+					<div class="content" data-content="content-1">
+						<p>I still don't know what to put on this page.......maybe a video? An intro? Hmmmmmmm....</p>
+					</div>
+					<div class="content" data-content="content-2">
+						<div class="halfnhalf" class="grid" id="half1">
+                            <figure class="effect-honey">
+                                <figcaption>
+                                    <a href="#"><h2>Function<span><i>over</i></span><i>Form</i></h2></a>
+                                </figcaption>
+                            </figure>
+                        </div>
+                        <div class="halfnhalf" class="grid" id="half2">
+                                <figure class="effect-honey">
+                                    <figcaption>
+                                        <a href="#"><h2 style="margin: 40% 0 0 50%; text-align: left;">Form<span><i>over</i></span><i>Function</i></h2></a>
+                                    </figcaption>
+                                </figure>
+                        </div>
+					</div>
+					<div class="content" data-content="content-3" ng-controller="ModelCtrl">
+						<div class="grid" ng-repeat="model in models">
+                            <figure class="effect-romeo">
+                                <img src='{{model.src}}'/>
+                                <figcaption>
+                                    <h1>{{model.title}}</h1>
+                                </figcaption>           
+                            </figure>
+                        </div>
+					</div>
+					<div class="content" data-content="content-4" ng-controller="MeetCtrl">
+						<h1 ng-repeat="meet in meets">{{meet.Name + ' : ' + meet.Location}}</h1>
+					</div>
+					<div class="content" data-content="content-5">
+						
+					</div>
+					<div class="content" data-content="content-6">
+	                   
+					</div>
+				</section>
+			</div>
+		</div><!-- /container --> 
+		<script src="js/dragdealer.js"></script>
+		<script src="js/classie.js"></script>
+		<script src="js/dragslideshow.js"></script>
+        <script src="js/selectFx.js"></script>
+        <script src="js/fullscreenForm.js"></script>
+		<script>
+			(function() {
+
+				var overlay = document.getElementById( 'overlay' ),
+					overlayClose = overlay.querySelector( 'button' ),
+					header = document.getElementById( 'header' )
+					switchBtnn = header.querySelector( 'button.slider-switch' ),
+					toggleBtnn = function() {
+						if( slideshow.isFullscreen ) {
+							classie.add( switchBtnn, 'view-maxi' );
+						}
+						else {
+							classie.remove( switchBtnn, 'view-maxi' );
+						}
+					},
+					toggleCtrls = function() {
+						if( !slideshow.isContent ) {
+							classie.add( header, 'hide' );
+						}
+					},
+					toggleCompleteCtrls = function() {
+						if( !slideshow.isContent ) {
+							classie.remove( header, 'hide' );
+						}
+					},
+					slideshow = new DragSlideshow( document.getElementById( 'slideshow' ), { 
+						// toggle between fullscreen and minimized slideshow
+						onToggle : toggleBtnn,
+						// toggle the main image and the content view
+						onToggleContent : toggleCtrls,
+						// toggle the main image and the content view (triggered after the animation ends)
+						onToggleContentComplete : toggleCompleteCtrls
+					}),
+					toggleSlideshow = function() {
+						slideshow.toggle();
+						toggleBtnn();
+					},
+					closeOverlay = function() {
+						classie.add( overlay, 'hide' );
+					};
+
+				// toggle between fullscreen and small slideshow
+				switchBtnn.addEventListener( 'click', toggleSlideshow );
+				// close overlay
+				overlayClose.addEventListener( 'click', closeOverlay );
+			}());
+
+            (function() {
+                var formWrap = document.getElementById( 'fs-form-wrap' );
+
+                [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {    
+                    new SelectFx( el, {
+                        stickyPlaceholder: false,
+                        onChange: function(val){
+                            document.querySelector('span.cs-placeholder').style.backgroundColor = val;
+                        }
+                    });
+                } );
+
+                new FForm( formWrap, {
+                    onReview : function() {
+                        classie.add( document.body, 'overview' ); // for demo purposes only
+                    }
+                } );
+            })();
+		</script>
+	</body>
+</html>
